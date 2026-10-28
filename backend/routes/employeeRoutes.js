@@ -1,0 +1,10 @@
+const r = require('express').Router();
+const c = require('../controllers/employeeController');
+const { protect, authorize } = require('../middleware/auth');
+r.use(protect);
+r.get('/', authorize('admin', 'manager'), c.list);
+r.post('/', authorize('admin'), c.create);
+r.get('/:id', c.get);
+r.put('/:id', authorize('admin'), c.update);
+r.delete('/:id', authorize('admin'), c.remove);
+module.exports = r;
